@@ -123,5 +123,23 @@ const monkeyIslandQuotes = [
   "Yikes!"
 ];
 
-module.exports = { monkeyIslandQuotes }
+function quote(msg) {
+  const random = Math.floor(Math.random() * monkeyIslandQuotes.length);
+  if (random === 0) {
+    msg.reply(monkeyIslandQuotes[random])
+  } else {
+    msg.channel.send(monkeyIslandQuotes[random])
+  }
+}
+
+function greetings(member) {
+  const channel = member.guild.channels.cache.find(ch => ch.name === 'member-log');
+  if (!channel) return;
+  channel.send(`Welcome to the server, ${member}`);
+}
+
+module.exports = { 
+  quote,
+  greetings
+};
   
