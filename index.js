@@ -6,6 +6,7 @@ const giveMe = require("./interactions/giveMe.js");
 const say = require("./interactions/say.js");
 const miscellaneous = require("./interactions/miscellaneous.js");
 const vote = require("./interactions/vote.js");
+const musicPlayer = require("./musicPlayer.js");
 
 let userBan = {
   culiaoactual: "",
@@ -43,6 +44,9 @@ client.on("message", async msg => {
     case "$bitcoin": giveMe.BTCPrice(msg); break;
     case "$despertame": miscellaneous.despertameEn(msg);break;
     case "$vote": await vote.vote(msg); break;
+    case "$tocate": await (new musicPlayer.MusicPlayer()).tocate(msg); break;
+    case "$pasala": await (new musicPlayer.MusicPlayer()).pasala(msg); break;
+    case "$cortala": await (new musicPlayer.MusicPlayer()).cortala(msg); break;
   }
   
   if (msg.content.startsWith("$Callate loro de mierda")) {
