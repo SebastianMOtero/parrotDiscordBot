@@ -5,32 +5,56 @@ const sing = require("./interactions/sing.js");
 const giveMe = require("./interactions/giveMe.js");
 const say = require("./interactions/say.js");
 const miscellaneous = require("./interactions/miscellaneous.js");
-let userBan = "";
+const vote = require("./interactions/vote.js");
+
+let userBan = {
+  culiaoactual: "",
+};
+let serverConn = {
+  connection: {}
+};
 
 client.login(process.env.TOKEN);
-client.on("ready", () => { console.log(`The parrot has spoken sailors.`)})
+client.on("ready", () => { console.log(`The parrot has spoken sailors.`) })
 
 client.on("message", async msg => {
-  if (msg.author.bot) return;
+  if (msg.content.startsWith("$Callate loro de mierda")) {
+    return;
+  }
+
+  if (msg.author.bot || !msg.content.startsWith("$")) return;
 
   client.on('guildMemberAdd', member => say.greetings(member))
 
-  if(msg.author.username === userBan){
-    msg.reply("A vos no te hago caso tucumano culiao");
+  if (`<@!${msg.author.id}>` === userBan.culiaoactual) {
+    msg.reply("A vos no te hago caso culiao");
     return;
   }
 
   switch (msg.content.split(" ")[0]) {
     case "$hey": say.quote(msg); break;
-    case "$deployer": await sing.deployer(msg); break;
-    case "$b": await sing.birdIsTheWord(msg); break;
-    case "$peron": await sing.peron(msg); break;
+    case "$deployer": await sing.deployer(msg, serverConn); break;
+    case "$b": await sing.birdIsTheWord(msg, serverConn); break;
+    case "$peron": await sing.marchaPeronista(msg, serverConn); break;
     case "$cat": giveMe.cats(msg); break;
     case "$noticia": giveMe.news(msg); break;
-    case "$rucula" :
-    case "$rúcula" : giveMe.dollarPrice(msg); break;
+    case "$rucula":
+    case "$rúcula": giveMe.dollarPrice(msg); break;
     case "$bitcoin": giveMe.BTCPrice(msg); break;
+    case "$despertame": miscellaneous.despertameEn(msg);break;
+    case "$vote": await vote.vote(msg); break;
   }
+  
+  if (msg.content.startsWith("$Callate loro de mierda")) {
+    sing.callate(msg, serverConn);
+  };
 
-  if (msg.content.startsWith("$A la tabla")) { miscellaneous.aLaTabla(userBan, msg);};
+  if (msg.content.startsWith("$A la tabla")) {
+    miscellaneous.aLaTabla(userBan, msg);
+    console.log(userBan)
+  };
+
+  if (msg.content.startsWith("$Volve") && msg.content.endsWith("no te fajamos mas")) {
+    miscellaneous.traemeAlCuliao(userBan, msg);
+  };
 })

@@ -30,7 +30,7 @@ const monkeyIslandQuotes = [
   "Say, are you guys pirates?",
   "I'm really interested in this pirating thing.",
   "Maybe no one will miss just this one thing.",
-  "Half the people I know are named Guybrush.", 
+  "Half the people I know are named Guybrush.",
   "I hate surprises.",
   "Hello? Anybody in here? HELLO???",
   "Bad things happen to people who sneak up on other people.",
@@ -135,11 +135,10 @@ function quote(msg) {
 function greetings(member) {
   const channel = member.guild.channels.cache.find(ch => ch.name === 'member-log');
   if (!channel) return;
-  channel.send(`Welcome to the server, ${member}`);
+  channel.send(`Subid a bordo, ${member}!`);
 }
 
-module.exports = { 
+module.exports = {
   quote,
   greetings
 };
-  
